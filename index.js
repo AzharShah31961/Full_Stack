@@ -1,16 +1,35 @@
 const express = require("express");
 
-const app = express()
+// Express ko app me me save kardia
+const app = express();
 
 // env
+require("dotenv").config();
 
-require("dotenv").config()
+// middlewares  // decode karne keliye JSON  me
 
-const {connectionDB} = require("./Config/Database")
-const UserAccount = require("./Models/UserAccounts")
-// Port define 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.listen(process.env.PORT,function(){
-    console.log(`Serves is running as ${process.env.PORT}`);
-    connectionDB();
-})
+// is line se database connect horaha ha
+const { connectionDB } = require("./Config/Database");
+
+// Controllers se method ko import karaya ha
+
+const {
+  createRoles,
+  getRoles,
+  deleteRole,
+  updateRole
+} = require("./Controllers/RolesController");
+
+// Route define karna ke url per kiya chale to kiya aaya
+app.route("/").get(getRoles).post(createRoles);
+app.route("/role/:id").delete(deleteRole);
+app.route("/role/:id").put(updateRole);
+
+// Port define
+app.listen(process.env.PORT, function () {
+  console.log(`Serves is running as ${process.env.PORT}`);
+  connectionDB();
+});
