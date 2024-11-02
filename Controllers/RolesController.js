@@ -74,12 +74,12 @@ async function deleteRole(req, res) {
 
 async function updateRole(req, res) {
   //url me jo id ha abhi is waqt
-  const userRole = req.params.id;
+  const userRoleid = req.params.id;
 
   // purane data to check karna ke record ha bhi ya nahi ha
 
-  const role_old_data = await userRole.findOne({
-    Role_name: userRole.toLowerCase(),
+  const role_old_data = await UserRoles.findOne({
+    Role_name: userRoleid.toLowerCase(),
   });
 
   //Conole me dekhne keliye ke kiya name aaraha ha ?
@@ -91,9 +91,9 @@ async function updateRole(req, res) {
 
   // Naye Object ko Update karna
 
-  const Updatedata = await userRole.UpdateOne(
+  const Updatedata = await UserRoles.updateOne(
     {
-      Role_name: role_old_data.Role_name,
+      "Role_name": role_old_data.Role_name,
     },
     {
       $set: {

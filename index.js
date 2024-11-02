@@ -25,8 +25,7 @@ const {
 
 // Route define karna ke url per kiya chale to kiya aaya
 app.route("/").get(getRoles).post(createRoles);
-app.route("/role/:id").delete(deleteRole);
-app.route("/role/:id").put(updateRole);
+app.route("/role/:id").delete(deleteRole).put(updateRole);
 
 // Port define
 app.listen(process.env.PORT, function () {
